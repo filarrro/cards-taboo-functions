@@ -1,4 +1,4 @@
-import querystring from "querystring";
+const querystring = require("querystring");
 
 const USERS = {
   'mateo!123': { id: 'mateo!123', name: 'Mateo' },
