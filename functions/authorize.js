@@ -1,5 +1,11 @@
 const querystring = require("querystring");
 
+export const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'
+};
+
 const USERS = {
   'mateo!123': { id: 'mateo!123', name: 'Mateo' },
   'asiulek!123': { id: 'asiulek!123', name: 'Asiulek' },
@@ -12,7 +18,7 @@ const USERS = {
 exports.handler = async (event, context) => {
   // Only allow POST
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" };
+    return { statusCode: 405, headers, body: "Method Not Allowed" };
   }
 
   // When the method is POST, the name will no longer be in the event’s
@@ -22,6 +28,7 @@ exports.handler = async (event, context) => {
 
   return {
     statusCode: !user ? 401 : 200,
+    headers,
     body: user
   };
 };
