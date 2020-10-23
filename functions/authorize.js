@@ -1,5 +1,3 @@
-const querystring = require("querystring");
-
 const headers = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type',
@@ -18,15 +16,16 @@ const USERS = {
 exports.handler = async (event, context) => {
   switch (event.httpMethod) {
     case 'POST':
-      // When the method is POST, the name will no longer be in the event’s
-      // queryStringParameters – it’ll be in the event body encoded as a query string
-      const params = querystring.parse(event.body);
-      const user = USERS[params.name];
+      const body = JSON.parse(event.body);
+      const name = body.name;
+      console.log('name', name)
+      const user = USERS[name];
+      console.log('user', user);
 
       return {
-        statusCode: !user ? 401 : 200,
+        statusCode: 200,
         headers,
-        body: user
+        body: JSON.stringify(user)
       };
 
     case 'GET':
